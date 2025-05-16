@@ -27,6 +27,14 @@ class AddOrderTable extends Migration
                 'type' => 'DECIMAL',
                 'constraint' => '10,2',
             ],
+            'shipping_cost' => [
+                'type' => 'DECIMAL',
+                'constraint' => '10,2',
+            ],
+            'shipping_address' => [
+                'type' => 'VARCHAR',
+                'constraint' => 255,
+            ],
             'created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP',
             'updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'
         ]);
