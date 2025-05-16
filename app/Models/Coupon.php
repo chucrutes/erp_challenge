@@ -15,7 +15,7 @@ class StockModel extends Model
         'quantity',
         'total',
     ];
-    
+
     protected $returnType     = 'array';
     protected $useSoftDeletes = false;
 
@@ -39,4 +39,9 @@ class StockModel extends Model
             'greater_than_equal_to' => 'Quantidade deve ser maior ou igual a zero.',
         ],
     ];
+
+    public function withProduct()
+    {
+        return $this->join('products', 'products.id = coupons.product_id', 'left');
+    }
 }

@@ -22,6 +22,12 @@ class AddCouponTable extends Migration
                 'type' => 'DECIMAL',
                 'constraint' => '10,2',
             ],
+            'start_date' => [
+                'type' => 'DATETIME',
+            ],
+            'end_date' => [
+                'type' => 'DATETIME',
+            ],
             'created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP',
             'updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'
         ]);

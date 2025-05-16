@@ -4,7 +4,7 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class Product extends Model {
+class ProductModel extends Model {
     protected $table = 'products';
     protected $primaryKey = 'id';
     protected $useAutoIncrement = true;
@@ -35,10 +35,15 @@ class Product extends Model {
         ]
     ];
 
-
-
-    // Define relationships if needed
-    public function category() {
-        return $this->belongsTo('App\Models\Category', 'category_id');
+    public function withStock()
+    {
+        return $this->join('stocks', 'stocks.product_id = products.id', 'left');
     }
+
+
+    public function withCoupons()
+    {
+        return $this->join('coupons', 'coupons.product_id = products.id', 'left');
+    }
+
 }

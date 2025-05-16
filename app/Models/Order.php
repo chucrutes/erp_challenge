@@ -76,4 +76,14 @@ class OrderModel extends Model
 
         return 20;
     }
+
+    public function withCoupon()
+    {
+        return $this->join('coupons', 'coupons.id = orders.coupon_id', 'left');
+    }
+
+    public function withProduct()
+    {
+        return $this->join('products', 'products.id = orders.product_id', 'inner');
+    }
 }
