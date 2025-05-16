@@ -16,8 +16,12 @@ class AddOrderTable extends Migration
             ],
             'product_id' => [
                 'type' => 'INT',
-                'unsigned' => true,
                 'constraint' => 11,
+            ],
+            'coupon_id' => [
+                'type' => 'INT',
+                'constraint' => 11,
+                'null' => true
             ],
             'quantity' => [
                 'type' => 'DECIMAL',
@@ -27,19 +31,23 @@ class AddOrderTable extends Migration
                 'type' => 'DECIMAL',
                 'constraint' => '10,2',
             ],
-            'shipping_cost' => [
-                'type' => 'DECIMAL',
-                'constraint' => '10,2',
-            ],
             'shipping_address' => [
                 'type' => 'VARCHAR',
                 'constraint' => 255,
             ],
+            'payment_status' => [
+                'type' => 'ENUM',
+                'constraint' => ['pending', 'completed', 'failed'],
+                'default' => 'pending'
+            ],
             'created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP',
             'updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'
         ]);
+
         $this->forge->addKey('id', true);
-        $this->db->$this->forge->createTable('orders');
+        $this->forge->addForeignKey('product_id', 'products', 'id', 'CASCADE', 'CASCADE');
+        $this->forge->addForeignKey('coupon_id', 'coupons', 'id', 'CASCADE', 'CASCADE');
+        $this->forge->createTable('orders');
     }
 
     public function down()

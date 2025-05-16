@@ -4,7 +4,7 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class AddOrderTable extends Migration
+class AddCouponTable extends Migration
 {
     public function up()
     {
@@ -16,14 +16,9 @@ class AddOrderTable extends Migration
             ],
             'product_id' => [
                 'type' => 'INT',
-                'unsigned' => true,
                 'constraint' => 11,
             ],
-            'quantity' => [
-                'type' => 'DECIMAL',
-                'constraint' => '10,2',
-            ],
-            'total' => [
+            'discount' => [
                 'type' => 'DECIMAL',
                 'constraint' => '10,2',
             ],
@@ -31,11 +26,12 @@ class AddOrderTable extends Migration
             'updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'
         ]);
         $this->forge->addKey('id', true);
-        $this->db->$this->forge->createTable('orders');
+        $this->forge->addForeignKey('product_id', 'products', 'id', 'CASCADE', 'CASCADE');
+        $this->forge->createTable('coupons');
     }
 
     public function down()
     {
-        $this->forge->dropTable('orders');
+        $this->forge->dropTable('coupons');
     }
 }

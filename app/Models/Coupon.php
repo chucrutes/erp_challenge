@@ -6,15 +6,16 @@ use CodeIgniter\Model;
 
 class StockModel extends Model
 {
-    protected $table      = 'stocks';
-    protected $primaryKey = 'product_id';
-    protected $useAutoIncrement = false;
+    protected $table      = 'coupons';
+    protected $primaryKey = 'id';
+    protected $useAutoIncrement = true;
 
     protected $allowedFields = [
         'product_id',
         'quantity',
+        'total',
     ];
-
+    
     protected $returnType     = 'array';
     protected $useSoftDeletes = false;
 

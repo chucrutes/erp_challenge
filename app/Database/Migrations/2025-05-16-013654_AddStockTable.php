@@ -11,7 +11,6 @@ class AddStockTable extends Migration
         $this->forge->addField([
             'product_id' => [
                 'type' => 'INT',
-                'unsigned' => true,
                 'constraint' => 11,
             ],
             'quantity' => [
@@ -23,7 +22,7 @@ class AddStockTable extends Migration
         ]);
         $this->forge->addKey('product_id', true);
         $this->forge->addForeignKey('product_id', 'products', 'id', 'CASCADE', 'CASCADE');
-        $this->db->$this->forge->createTable('stocks');
+        $this->forge->createTable('stocks');
     }
 
     public function down()
