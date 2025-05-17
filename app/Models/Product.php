@@ -46,4 +46,15 @@ class ProductModel extends Model {
         return $this->join('coupons', 'coupons.product_id = products.id', 'left');
     }
 
+    public function create(array $data): int
+    {
+
+        if($this->validate($data) === false) {
+            throw new \Exception('Ocorreu os seguintes erros: ' . implode(', ', $this->errors()));
+        }
+
+
+        return $this->insert($data);
+    }
+
 }
