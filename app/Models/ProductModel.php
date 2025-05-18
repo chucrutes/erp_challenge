@@ -3,26 +3,29 @@
 namespace App\Models;
 
 use CodeIgniter\Model;
+use Exception;
+use App\Models\StockModel;
 
-class ProductModel extends Model {
+class ProductModel extends Model
+{
     protected $table = 'products';
     protected $primaryKey = 'id';
     protected $useAutoIncrement = true;
 
     protected $allowedFields = ['name', 'price'];
-    
+
     protected $returnType = 'array';
     protected $useSoftDeletes = false;
-    
+
     protected $useTimestamps = true;
     protected $createdField = 'created_at';
     protected $updatedField = 'updated_at';
 
     protected $validationRules = [
         'name' => 'required|min_length[3]|max_length[255]',
-        'price' => 'required|decimal'
+        'price' => 'required|decimal',
     ];
-    
+
     protected $validationMessages = [
         'name' => [
             'required' => 'Nome do produto é obrigatório',
@@ -31,7 +34,11 @@ class ProductModel extends Model {
         ],
         'price' => [
             'required' => 'Preço do produto é obrigatório',
-            'decimal' => 'Price do produto deve ser um número'
+            'decimal' => 'Preço do produto deve ser um número'
+        ],
+        'quantity' => [
+            'required' => 'Quantidade do produto é obrigatório',
+            'decimal' => 'Quantidade do produto deve ser um número'
         ]
     ];
 
@@ -49,12 +56,10 @@ class ProductModel extends Model {
     public function create(array $data): int
     {
 
-        if($this->validate($data) === false) {
-            throw new \Exception('Ocorreu os seguintes erros: ' . implode(', ', $this->errors()));
+        if ($this->validate($data) === false) {
+            throw new Exception('Ocorreram os seguintes erros: ' . implode(', ', $this->errors()));
         }
-
 
         return $this->insert($data);
     }
-
 }

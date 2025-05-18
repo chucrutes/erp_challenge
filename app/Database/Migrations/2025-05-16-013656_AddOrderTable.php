@@ -27,7 +27,15 @@ class AddOrderTable extends Migration
                 'type' => 'DECIMAL',
                 'constraint' => '10,2',
             ],
+            'sub_total' => [
+                'type' => 'DECIMAL',
+                'constraint' => '10,2',
+            ],
             'total' => [
+                'type' => 'DECIMAL',
+                'constraint' => '10,2',
+            ],
+            'shipping_fee' => [
                 'type' => 'DECIMAL',
                 'constraint' => '10,2',
             ],
