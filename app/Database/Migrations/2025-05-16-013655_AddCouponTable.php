@@ -4,46 +4,40 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class AddOrderTable extends Migration
+class AddCouponTable extends Migration
 {
     public function up()
     {
         $this->forge->addField([
-            'id' => [
+            'coupon_id' => [
                 'type' => 'INT',
                 'constraint' => 11,
                 'auto_increment' => true
             ],
             'product_id' => [
                 'type' => 'INT',
-                'unsigned' => true,
                 'constraint' => 11,
             ],
-            'quantity' => [
+            'discount' => [
                 'type' => 'DECIMAL',
                 'constraint' => '10,2',
             ],
-            'total' => [
-                'type' => 'DECIMAL',
-                'constraint' => '10,2',
+            'start_date' => [
+                'type' => 'DATETIME',
             ],
-            'shipping_cost' => [
-                'type' => 'DECIMAL',
-                'constraint' => '10,2',
-            ],
-            'shipping_address' => [
-                'type' => 'VARCHAR',
-                'constraint' => 255,
+            'end_date' => [
+                'type' => 'DATETIME',
             ],
             'created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP',
             'updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'
         ]);
-        $this->forge->addKey('id', true);
-        $this->db->$this->forge->createTable('orders');
+        $this->forge->addKey('coupon_id', true);
+        $this->forge->addForeignKey('product_id', 'products', 'product_id', 'CASCADE', 'CASCADE');
+        $this->forge->createTable('coupons');
     }
 
     public function down()
     {
-        $this->forge->dropTable('orders');
+        $this->forge->dropTable('coupons');
     }
 }
