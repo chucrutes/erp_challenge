@@ -41,4 +41,19 @@ class ProductController extends BaseController
             return redirect()->to('');
         }
     }
+    public function delete($id)
+    {
+
+        try {
+
+            $productModel = new ProductModel();
+            $productModel->delete($id);
+
+            session()->setFlashdata('success', $id);
+        } catch (Exception $e) {
+            session()->setFlashdata('error', $e->getMessage());
+        } finally {
+            return redirect()->to('');
+        }
+    }
 }
