@@ -51,7 +51,7 @@
                             <a href="/products/edit/<?= esc($product['product_id']) ?>">Editar</a>
                             <form action="/products/delete/<?= esc($product['product_id']) ?>" method="POST" style="display:inline;" onsubmit="return confirm('Tem certeza que deseja excluir este item?');">
                                 <?= csrf_field() ?>
-                                <button type="submit" style="background-color: red;">Excluir</button>
+                                <button type="submit" class="btn-danger">Excluir</button>
                             </form>
                         </td>
                     </tr>

@@ -70,6 +70,10 @@ button {
     margin: .1em 0;
 }
 
+.btn-danger {
+    background-color: red;
+}
+
 button:hover {
     transform: scale(1.05);
     transition: transform 1s ease-in-out;

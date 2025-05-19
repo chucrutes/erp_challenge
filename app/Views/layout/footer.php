@@ -1,3 +1,3 @@
 <footer>
-    Footer
+    Criado por Thiago Araújo
 </footer>
