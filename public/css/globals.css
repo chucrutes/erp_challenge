@@ -82,6 +82,29 @@ input {
     margin: .2em 0;
 }
 
+select {
+    padding: 0.4em;
+    border-radius: 2em;
+    border: 1px solid #ccc;
+    margin: 0.2em 0;
+    background-color: #fff;
+    font-size: 1em;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+select {
+    padding-right: 2em;
+    background-repeat: no-repeat;
+    background-position: right 0.8em center;
+    background-size: 1em;
+}
+
+option {
+    padding: 0.4em;
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
