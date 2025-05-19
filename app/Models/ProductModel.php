@@ -4,15 +4,14 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 use Exception;
-use App\Models\StockModel;
 
 class ProductModel extends Model
 {
     protected $table = 'products';
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'product_id';
     protected $useAutoIncrement = true;
 
-    protected $allowedFields = ['name', 'price'];
+    protected $allowedFields = ['name', 'price', 'quantity'];
 
     protected $returnType = 'array';
     protected $useSoftDeletes = false;
@@ -24,6 +23,7 @@ class ProductModel extends Model
     protected $validationRules = [
         'name' => 'required|min_length[3]|max_length[255]',
         'price' => 'required|decimal',
+        'quantity' => 'required|decimal',
     ];
 
     protected $validationMessages = [
@@ -42,15 +42,10 @@ class ProductModel extends Model
         ]
     ];
 
-    public function withStock()
-    {
-        return $this->join('stocks', 'stocks.product_id = products.id', 'left');
-    }
-
 
     public function withCoupons()
     {
-        return $this->join('coupons', 'coupons.product_id = products.id', 'left');
+        return $this->join('coupons', 'coupons.product_id = products.product_id', 'left');
     }
 
     public function create(array $data): int

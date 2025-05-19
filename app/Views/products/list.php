@@ -27,5 +27,31 @@
         </div>
         <button type="submit">Salvar</button>
     </form>
+    <?php if (! empty($products) && is_array($products)): ?>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Preço</th>
+                    <th>Quantidade</th>
+                    <th>Atualizado Em</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($products as $product): ?>
+                    <tr>
+                        <td><?= esc($product['product_id']) ?></td>
+                        <td><?= esc($product['name']) ?></td>
+                        <td><?= esc(number_format($product['price'], 2, ',', '.')) ?></td>
+                        <td><?= esc(number_format($product['quantity'], 2, ',', '.')) ?></td>
+                        <td><?= format_brazillian_date(esc($product['updated_at'])) ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    <?php else: ?>
+        <p>Não há produtos cadastrados.</p>
+    <?php endif; ?>
 </div>
 <?= $this->endSection() ?>

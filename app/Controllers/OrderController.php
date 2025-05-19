@@ -3,26 +3,23 @@
 namespace App\Controllers;
 
 use App\Models\ProductModel;
+use App\Models\OrderModel;
 use Exception;
 
-class ProductController extends BaseController
+class OrderController extends BaseController
 {
     public function index(): string
     {
         $productModel = new ProductModel();
-        $products = $productModel->findAll();
+        $products = $productModel->withCoupons()->findAll();
+        print_r($products);
+
 
         $data = [
             'products' => $products,
         ];
 
-        return view('products/list', $data);
-    }
-
-    public function get(int $id): string
-    {
-        echo $id;
-        return view('products');
+        return view('orders/list', $data);
     }
 
     public function insert()
@@ -31,10 +28,10 @@ class ProductController extends BaseController
         try {
             $data = $this->request->getPost();
 
-            $productModel = new ProductModel();
-            $productModel->create($data);
+            $orderModel = new OrderModel();
+            $orderModel->create($data);
 
-            session()->setFlashdata('success', 'Produto cadastrado com sucesso');
+            session()->setFlashdata('success', 'Pedido cadastrado com sucesso');
         } catch (Exception $e) {
             session()->setFlashdata('error', $e->getMessage());
         } finally {

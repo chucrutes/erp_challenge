@@ -3,11 +3,12 @@
 namespace App\Models;
 
 use CodeIgniter\Model;
+use Exception;
 
 class OrderModel extends Model
 {
     protected $table      = 'orders';
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'order_id';
     protected $useAutoIncrement = true;
 
     protected $allowedFields = [
@@ -20,11 +21,12 @@ class OrderModel extends Model
     ];
 
     protected $returnType     = 'array';
-    protected $useSoftDeletes = false;
+    protected $useSoftDeletes = true;
 
     protected $useTimestamps = true;
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
+    protected $deletedField  = 'deleted_at';
 
     protected $validationRules    = [
         'product_id'      => 'required|is_natural_no_zero',
@@ -64,6 +66,12 @@ class OrderModel extends Model
         ],
     ];
 
+    protected function initialize()
+    {
+        parent::initialize();
+        $this->where('deleted_at', null);
+    }
+
     public function calculateShippingCost(float $subtotal): float
     {
         if ($subtotal >= 52.00 && $subtotal <= 166.59) {
@@ -79,11 +87,21 @@ class OrderModel extends Model
 
     public function withCoupon()
     {
-        return $this->join('coupons', 'coupons.id = orders.coupon_id', 'left');
+        return $this->join('coupons', 'coupons.coupon_id = orders.coupon_id', 'left');
     }
 
     public function withProduct()
     {
-        return $this->join('products', 'products.id = orders.product_id', 'inner');
+        return $this->join('products', 'products.product_id = orders.product_id', 'inner');
+    }
+
+    public function create(array $data): int
+    {
+
+        if ($this->validate($data) === false) {
+            throw new Exception('Ocorreram os seguintes erros: ' . implode(', ', $this->errors()));
+        }
+
+        return $this->insert($data);
     }
 }

@@ -9,7 +9,7 @@ class AddCouponTable extends Migration
     public function up()
     {
         $this->forge->addField([
-            'id' => [
+            'coupon_id' => [
                 'type' => 'INT',
                 'constraint' => 11,
                 'auto_increment' => true
@@ -31,8 +31,8 @@ class AddCouponTable extends Migration
             'created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP',
             'updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'
         ]);
-        $this->forge->addKey('id', true);
-        $this->forge->addForeignKey('product_id', 'products', 'id', 'CASCADE', 'CASCADE');
+        $this->forge->addKey('coupon_id', true);
+        $this->forge->addForeignKey('product_id', 'products', 'product_id', 'CASCADE', 'CASCADE');
         $this->forge->createTable('coupons');
     }
 

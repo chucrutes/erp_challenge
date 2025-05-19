@@ -9,7 +9,7 @@ class AddOrderTable extends Migration
     public function up()
     {
         $this->forge->addField([
-            'id' => [
+            'order_id' => [
                 'type' => 'INT',
                 'constraint' => 11,
                 'auto_increment' => true
@@ -49,12 +49,17 @@ class AddOrderTable extends Migration
                 'default' => 'pending'
             ],
             'created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP',
-            'updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'
+            'updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP',
+            'deleted_at' => [
+                'type' => 'TIMESTAMP',
+                'null' => true,
+                'default' => null
+            ]
         ]);
 
-        $this->forge->addKey('id', true);
-        $this->forge->addForeignKey('product_id', 'products', 'id', 'CASCADE', 'CASCADE');
-        $this->forge->addForeignKey('coupon_id', 'coupons', 'id', 'CASCADE', 'CASCADE');
+        $this->forge->addKey('order_id', true);
+        $this->forge->addForeignKey('product_id', 'products', 'product_id', 'CASCADE', 'CASCADE');
+        $this->forge->addForeignKey('coupon_id', 'coupons', 'coupon_id', 'CASCADE', 'CASCADE');
         $this->forge->createTable('orders');
     }
 

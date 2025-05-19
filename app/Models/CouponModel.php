@@ -3,11 +3,12 @@
 namespace App\Models;
 
 use CodeIgniter\Model;
+use Exception;
 
 class CouponModel extends Model
 {
     protected $table      = 'coupons';
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'coupon_id';
     protected $useAutoIncrement = true;
 
     protected $allowedFields = ['product_id', 'discount', 'start_date', 'end_date'];
@@ -20,10 +21,10 @@ class CouponModel extends Model
     protected $updatedField  = 'updated_at';
 
     protected $validationRules = [
-        'product_id' => 'required|integer|is_not_unique[products.id]',
+        'product_id' => 'required|integer|is_not_unique[products.product_id]',
         'discount'   => 'required|decimal|greater_than[0]|less_than_equal_to[100]',
         'start_date' => 'required|valid_date',
-        'end_date'   => 'required|valid_date|after[start_date]',
+        'end_date'   => 'required|valid_date',
     ];
     protected $validationMessages = [
         'product_id' => [
@@ -43,13 +44,22 @@ class CouponModel extends Model
         ],
         'end_date' => [
             'required'   => 'A data de término é obrigatória.',
-            'valid_date' => 'A data de término deve ser uma data válida.',
-            'after'      => 'A data de término deve ser posterior à data de início.',
+            'valid_date' => 'A data de término deve ser uma data válida.'
         ],
     ];
 
     public function withProduct()
     {
-        return $this->join('products', 'products.id = coupons.product_id', 'left');
+        return $this->join('products', 'products.product_id = coupons.product_id', 'left');
+    }
+
+    public function create(array $data): int
+    {
+
+        if ($this->validate($data) === false) {
+            throw new Exception('Ocorreram os seguintes erros: ' . implode(', ', $this->errors()));
+        }
+
+        return $this->insert($data);
     }
 }
