@@ -36,6 +36,7 @@
                     <th>Preço</th>
                     <th>Quantidade</th>
                     <th>Atualizado Em</th>
+                    <th>Ações</th>
                 </tr>
             </thead>
             <tbody>
@@ -46,6 +47,13 @@
                         <td><?= esc(number_format($product['price'], 2, ',', '.')) ?></td>
                         <td><?= esc(number_format($product['quantity'], 2, ',', '.')) ?></td>
                         <td><?= format_brazillian_date(esc($product['updated_at'])) ?></td>
+                        <td style="display: flex; justify-content: center; align-items: center; gap: 1em">
+                            <a href="/products/edit/<?= esc($product['product_id']) ?>">Editar</a>
+                            <form action="/products/delete/<?= esc($product['product_id']) ?>" method="POST" style="display:inline;" onsubmit="return confirm('Tem certeza que deseja excluir este item?');">
+                                <?= csrf_field() ?>
+                                <button type="submit" class="btn btn-sm btn-danger">Excluir</button>
+                            </form>
+                        </td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
